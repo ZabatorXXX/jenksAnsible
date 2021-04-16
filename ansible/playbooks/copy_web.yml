@@ -1,0 +1,7 @@
+- hosts: webPoject
+  become: yes
+  tasks:
+  - name: "Copy over website directory to server to your server"
+    copy:
+      src: ../../website/
+      dest: /var/www/

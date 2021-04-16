@@ -1,0 +1,34 @@
+- hosts: webPoject
+  become: yes #blir root
+  tasks:
+  - name: "Update apt mirrors"
+    shell: "apt-get update"
+
+  - name: "install lighttpd"
+    apt:
+      name: ['lighttpd']
+      state: latest
+
+  - name: "create www directory that lighttpd will use soon"
+    file:
+      path: /var/www:/
+      state: directory
+      mode: '0775'
+      owner: "{{ web_user }}"
+      group: "{{ web_group }}"
+
+  - name: "copy lighttpd config" #our config
+    template:
+      src: lighttpd.conf
+      dest: /etc/lighttpd/lighttpd.conf
+      owner: root
+      group: root
+      mode: '0644'
+    notify: restart lighttpd
+
+  handlers:
+    - name: "restart lighttpd"
+      service:
+        name: lighttpd
+        state: restarted
+  

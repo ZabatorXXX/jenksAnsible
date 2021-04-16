@@ -1,0 +1,7 @@
+webPoject:
+  hosts: 167.71.79.150
+  vars:
+    web_user: www-data
+    web_group: www-data
+    ansible_user: root
+    ansible_ssh_rivate_key_file: ~/.ssh/id_rsa.pub
